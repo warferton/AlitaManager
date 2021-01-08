@@ -39,10 +39,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwtConfig = jwtConfig;
     }
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))

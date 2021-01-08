@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "https://alita-manager-app.herokuapp.com")
 @RequestMapping("/api/clients")
 public class ClientController {
     private ClientRepository clientRepository;
