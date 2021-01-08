@@ -9,13 +9,13 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.alexkirillov</groupId>
-	<artifactId>alitabot</artifactId>
+	<artifactId>alitamanager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>alitabot</name>
+	<name>alitamanager</name>
 	<description>AlitaBot's control and maintenance page</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>13</java.version>
 	</properties>
 	<repositories>
 		<repository>

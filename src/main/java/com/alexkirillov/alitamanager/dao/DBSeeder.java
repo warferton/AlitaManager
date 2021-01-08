@@ -1,12 +1,11 @@
-//package com.alexkirillov.alitabot.dao;
+//package com.alexkirillov.alitamanager.dao;
 //
-//import com.alexkirillov.alitabot.dao.appointmentrepo.AppointmentRepository;
-//import com.alexkirillov.alitabot.dao.clientrepo.ClientRepository;
-//import com.alexkirillov.alitabot.dao.employeerepo.EmployeeRepository;
-//import com.alexkirillov.alitabot.dao.workdayrepo.WorkdayRepository;
-//import com.alexkirillov.alitabot.dao.servicerepo.ServiceRepository;
-//import com.alexkirillov.alitabot.models.*;
-//import org.apache.tomcat.jni.Local;
+//import com.alexkirillov.alitamanager.dao.appointmentrepo.AppointmentRepository;
+//import com.alexkirillov.alitamanager.dao.clientrepo.ClientRepository;
+//import com.alexkirillov.alitamanager.dao.employeerepo.EmployeeRepository;
+//import com.alexkirillov.alitamanager.dao.workdayrepo.WorkdayRepository;
+//import com.alexkirillov.alitamanager.dao.servicerepo.ServiceRepository;
+//import com.alexkirillov.alitamanager.models.*;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.CommandLineRunner;
 //import org.springframework.stereotype.Component;
