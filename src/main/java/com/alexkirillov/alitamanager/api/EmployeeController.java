@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "https://alita-manager-app.herokuapp.com")
+@CrossOrigin(origins = {"https://alita-manager-app.herokuapp.com",
+        "https://fast-sierra-37663.herokuapp.com"})
 @RequestMapping("/api/employees")
 public class EmployeeController {
     private EmployeeRepository employeeRepository;
