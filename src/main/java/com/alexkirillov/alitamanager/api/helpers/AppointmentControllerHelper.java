@@ -17,9 +17,9 @@ import static com.alexkirillov.alitamanager.security.pathwaykeys.PathKeys.SECRET
 public class AppointmentControllerHelper {
 
 
-    private String insert_workdays_url= "http://localhost:8080/api/schedule/workdays/add/one/";
-    private String get_specific_workday_url = "http://localhost:8080/api/schedule/workdays/find/byDayId/";//<== dayId here
-    private String adjust_time_url = "http://localhost:8080/api/schedule/workdays/secret/"+SECRET_KEY.getLoad()+"/time/adjust/dayId/";
+    private String insert_workdays_url= "https://fast-sierra-37663.herokuapp.com/api/schedule/workdays/add/one/";
+    private String get_specific_workday_url = "https://fast-sierra-37663.herokuapp.com/api/schedule/workdays/find/byDayId/";//<== dayId here
+    private String adjust_time_url = "https://fast-sierra-37663.herokuapp.com/api/schedule/workdays/secret/"+SECRET_KEY.getLoad()+"/time/adjust/dayId/";
 
     public ResponseEntity insertOneAppointment(Appointment new_appointment, AppointmentRepository appointmentRepository) {
         RestTemplate restTemplate = buildRestTemplate();

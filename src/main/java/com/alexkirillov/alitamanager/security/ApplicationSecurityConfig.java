@@ -64,7 +64,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/schedule/workdays/delete/dayId/**",
                         "/api/schedule/workdays/add/one/**",
                         "/api/schedule/workdays/",
-                        "/api/schedule/appointments/delete/**").hasIpAddress("http://fast-sierra-37663.herokuapp.com")
+                        "/api/schedule/appointments/delete/**").hasIpAddress("https://fast-sierra-37663.herokuapp.com")
                 .anyRequest()
                 .authenticated()
                 ;
