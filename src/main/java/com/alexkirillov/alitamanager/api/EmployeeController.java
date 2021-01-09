@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = {"https://alita-manager-app.herokuapp.com",
-        "https://fast-sierra-37663.herokuapp.com"})
+        "http://localhost", "http://127.0.0.1", "https://127.0.0.1"})
 @RequestMapping("/api/employees")
 public class EmployeeController {
     private EmployeeRepository employeeRepository;
