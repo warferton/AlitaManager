@@ -21,7 +21,7 @@ import static com.alexkirillov.alitamanager.security.pathwaykeys.PathKeys.SECRET
 
 @RestController
 @CrossOrigin(origins = {"https://alita-manager-app.herokuapp.com",
-        "http://localhost", "http://127.0.0.1", "https://127.0.0.1"})
+        "http://localhost:7437", "http://127.0.0.1:7437", "https://127.0.0.1:7437"})
 @RequestMapping("/api/schedule/workdays")
 public class WorkdayController {
     private WorkdayRepository workdayRepository;

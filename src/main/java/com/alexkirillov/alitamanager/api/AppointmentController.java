@@ -18,7 +18,7 @@ import static com.alexkirillov.alitamanager.security.pathwaykeys.PathKeys.SECRET
 
 @RestController
 @CrossOrigin(origins = {"https://alita-manager-app.herokuapp.com",
-        "http://localhost", "http://127.0.0.1", "https://127.0.0.1"})
+        "http://localhost:7437", "http://127.0.0.1:7437", "https://127.0.0.1:7437"})
 @RequestMapping(value = {"/api/schedule/appointments"})
 public class AppointmentController {
     private AppointmentRepository appointmentRepository;
@@ -45,7 +45,6 @@ public class AppointmentController {
     }
 
     @PutMapping(value = {"/add/one/", "/add/one"})
-//    @PreAuthorize("hasAuthority('appointments:write')")
     public ResponseEntity insertAppointment(@RequestBody Appointment new_appointment){
         return helper.insertOneAppointment(new_appointment, this.appointmentRepository);
     }
