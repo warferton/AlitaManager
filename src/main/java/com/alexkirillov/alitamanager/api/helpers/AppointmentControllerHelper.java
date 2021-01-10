@@ -24,33 +24,21 @@ public class AppointmentControllerHelper {
         this.workdayController = workdayController;
     }
 
-//    private String insert_workdays_url= "https://fast-sierra-37663.herokuapp.com/api/schedule/workdays/add/one/";
-//    private String get_specific_workday_url = "https://fast-sierra-37663.herokuapp.com/api/schedule/workdays/find/byDayId/";//<== dayId here
-//    private String adjust_time_url = "https://fast-sierra-37663.herokuapp.com/api/schedule/workdays/secret/"+SECRET_KEY.getLoad()+"/time/adjust/dayId/";
 
     public ResponseEntity<String> insertOneAppointment(Appointment new_appointment, AppointmentRepository appointmentRepository) {
         RestTemplate restTemplate = buildRestTemplate();
         int id = Integer.parseInt(new_appointment.getDayId());
 
         //get initial response
-//        ResponseEntity<String> workday_result =
-//                restTemplate.getForEntity(get_specific_workday_url + id, String.class);
         List<Workday> workday_res = this.workdayController.getByDayId(id + "");
-        //Verify request succeed
-//        Assert.assertEquals(200, workday_result.getStatusCodeValue());
-
-        //checking if there is already a workday with the same day_id as the new appointment
 
         boolean workady_not_exsit_flag = workday_res.isEmpty();//workday_result.getBody().replace("[]", "").isEmpty();
 
 
         if (workady_not_exsit_flag) {
 
-//            restTemplate.put(insert_workdays_url, new Workday(LocalDate.now().plusDays(id - 1)));
 
             this.workdayController.insertWorkday(new Workday(LocalDate.now().plusDays(id - 1)));
-
-//            ResponseEntity<String> response = restTemplate.postForEntity(adjust_time_url + id, new_appointment.getInterval(), String.class);
 
             ResponseEntity<String> response = this.workdayController.adjustWorkTime(SECRET_KEY.getLoad(), id + "", new_appointment.getInterval());
 
@@ -60,16 +48,7 @@ public class AppointmentControllerHelper {
             }
         }
         else {
-            //get the workday_time from response body
 
-
-        //            String body = workday_result.getBody();
-        //            Duration time_left = Duration.parse(
-        //                    body.substring(
-        //                            body.indexOf("PT"),
-        //                            ((body.indexOf("M") > 0) ? body.indexOf("M") : body.indexOf("H")) + 1
-        //                    )
-        //            );
             //check if workday has enough time to accept the appointment
 
             int time_left_flag = workday_res.get(0).getWorkdayTime()
@@ -77,7 +56,6 @@ public class AppointmentControllerHelper {
 
             if (time_left_flag > 0) {
                 //DECREMENT TIME LEFT AND INSERT INTERVAL
-//                ResponseEntity<String> response = restTemplate.postForEntity(adjust_time_url + id, new_appointment.getInterval(), String.class);
                 ResponseEntity<String> response = this.workdayController.adjustWorkTime
                         (SECRET_KEY.getLoad(), id+"", new_appointment.getInterval());
 
