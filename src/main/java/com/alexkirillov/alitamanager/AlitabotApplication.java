@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
+import static com.alexkirillov.alitamanager.dao.WorkdayCleaner.DayUpdate;
+
 @SpringBootApplication
 @EnableConfigurationProperties({JwtConfig.class})
 public class AlitabotApplication {
@@ -13,8 +15,7 @@ public class AlitabotApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AlitabotApplication.class, args);
 		try{
-			WorkdayCleaner scheduledCleaner = new WorkdayCleaner();
-			scheduledCleaner.DayUpdate();
+			DayUpdate();
 		}catch (Exception e){
 			e.printStackTrace();
 		}

@@ -15,19 +15,20 @@ import static com.alexkirillov.alitamanager.security.pathwaykeys.PathKeys.SECRET
 public class WorkdayCleaner {
 
     private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-
-    private AppointmentController appointmentController;
-    private WorkdayController workdayController;
+    @Autowired
+    private static AppointmentController appointmentController;
+    @Autowired
+    private static WorkdayController workdayController;
 
     @Autowired
     public WorkdayCleaner(AppointmentController appointmentController, WorkdayController workdayController) {
-        this.appointmentController = appointmentController;
-        this.workdayController = workdayController;
+        WorkdayCleaner.appointmentController = appointmentController;
+        WorkdayCleaner.workdayController = workdayController;
     }
 
 
 
-    public void DayUpdate() {
+    public static void DayUpdate() {
 
          final Runnable updater = () -> {
              /* updater code
@@ -36,11 +37,11 @@ public class WorkdayCleaner {
 
              try {
                 // decrement wds
-                 this.workdayController.decrementDayIds(SECRET_KEY.getLoad());
+                 workdayController.decrementDayIds(SECRET_KEY.getLoad());
                  //decrement appointments
-                 this.appointmentController.decrementDayIds(SECRET_KEY.getLoad());
+                 appointmentController.decrementDayIds(SECRET_KEY.getLoad());
                  //delete wd
-                 this.workdayController.deleteWorkday("0");///TEST OUT LATER
+                 workdayController.deleteWorkday("0");///TEST OUT LATER
 
 
 
