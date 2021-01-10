@@ -7,6 +7,7 @@ import com.alexkirillov.alitamanager.models.QAppointment;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,12 +42,13 @@ public class AppointmentController {
 
     @PostMapping(value = {"/update/", "/update"})
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void updateAppointment(@RequestBody Appointment new_appointment){
+    public ResponseEntity<String> updateAppointment(@RequestBody Appointment new_appointment){
         this.appointmentRepository.save(new_appointment);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PutMapping(value = {"/add/one/", "/add/one"})
-    public ResponseEntity insertAppointment(@RequestBody Appointment new_appointment){
+    public ResponseEntity<String> insertAppointment(@RequestBody Appointment new_appointment){
         return helper.insertOneAppointment(new_appointment, this.appointmentRepository);
     }
 
@@ -59,16 +61,18 @@ public class AppointmentController {
 
     @DeleteMapping(value = {"/delete/id/{id}","/delete/id/{id}/"})
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteAppointment(@PathVariable("id") String id){
+    public ResponseEntity<String> deleteAppointment(@PathVariable("id") String id){
         this.appointmentRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(value = {"/delete/all/day/id/{day_id}", "/delete/all/day/id/{day_id}/"})
-    public void deleteAllAppointmentsOnWorkday(@PathVariable("day_id") String day_id){
+    public ResponseEntity<String> deleteAllAppointmentsOnWorkday(@PathVariable("day_id") String day_id){
         QAppointment appointment = new QAppointment("appointment");
         BooleanExpression filter = appointment.day_id.eq(day_id);
         List<Appointment> appointments_to_delete = (List<Appointment>) this.appointmentRepository.findAll(filter);
         this.appointmentRepository.deleteAll(appointments_to_delete);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     //SERVER-SIDE MANIPULATIONS
