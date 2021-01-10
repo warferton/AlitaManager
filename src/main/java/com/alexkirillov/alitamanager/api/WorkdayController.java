@@ -24,7 +24,7 @@ import static com.alexkirillov.alitamanager.security.pathwaykeys.PathKeys.SECRET
         "https://fast-sierra-37663.herokuapp.com"})
 @RequestMapping("/api/schedule/workdays")
 public class WorkdayController {
-    private WorkdayRepository workdayRepository;
+    private final WorkdayRepository workdayRepository;
 
     @Autowired
     public WorkdayController(WorkdayRepository workdayRepository) {
@@ -72,10 +72,6 @@ public class WorkdayController {
         String id = this.getByDayId(day_id).get(0).getDayId();
         this.workdayRepository.deleteById(id);
         System.out.println("WD_ID: " + id + "  --DELETED");
-
-
-        return;
-
     }
 
     //Search
@@ -98,24 +94,24 @@ public class WorkdayController {
 
     //DECR all DayIds and delete the first one
     @DeleteMapping(value = {"/secret/{passKey}/dec/all"})
-    public ResponseEntity decrementDayIds(@PathVariable String passKey){
+    public ResponseEntity<String> decrementDayIds(@PathVariable String passKey){
         if(passKey.equals(SECRET_KEY.getLoad())) {
             List<Workday> workdays = this.workdayRepository.findAll();
             this.workdayRepository.deleteAll();
             if(Integer.parseInt(workdays.get(0).getDayId()) <= 0)
                 workdays.remove(0);
-            workdays.stream()
+            workdays
                     .forEach(w -> w.setDay_id(Integer.parseInt(w.getDayId()) - 1));
             this.workdayRepository.saveAll(workdays);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
 
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
     }
 
     @PostMapping(value = "/secret/{passKey}/time/adjust/dayId/{dayId}")
-    public ResponseEntity adjustWorkTime(@PathVariable String passKey,
+    public ResponseEntity<String> adjustWorkTime(@PathVariable String passKey,
                                @PathVariable String dayId,
                                @RequestBody Interval interval){
         if(passKey.equals(SECRET_KEY.getLoad())){
@@ -130,15 +126,15 @@ public class WorkdayController {
                if(interval_flag){
                 //update the workday in db
                     this.workdayRepository.save(workday);
-                    return new ResponseEntity(HttpStatus.OK);
+                    return new ResponseEntity<>(HttpStatus.OK);
                }
 
             }catch (Exception e){
                 e.printStackTrace();
             }
-            return new ResponseEntity(HttpStatus.INSUFFICIENT_STORAGE);
+            return new ResponseEntity<>(HttpStatus.INSUFFICIENT_STORAGE);
         }
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
 

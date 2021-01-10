@@ -22,11 +22,13 @@ import static com.alexkirillov.alitamanager.security.pathwaykeys.PathKeys.SECRET
 @RequestMapping(value = {"/api/schedule/appointments"})
 public class AppointmentController {
     private AppointmentRepository appointmentRepository;
-    private AppointmentControllerHelper helper = new AppointmentControllerHelper();
+
+    private AppointmentControllerHelper helper;
 
     @Autowired
-    public AppointmentController(AppointmentRepository appointmentRepository){
+    public AppointmentController(AppointmentRepository appointmentRepository, AppointmentControllerHelper helper){
         this.appointmentRepository = appointmentRepository;
+        this.helper = helper;
     }
 
 
