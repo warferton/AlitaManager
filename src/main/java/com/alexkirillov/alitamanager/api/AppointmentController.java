@@ -17,8 +17,7 @@ import java.util.List;
 import static com.alexkirillov.alitamanager.security.pathwaykeys.PathKeys.SECRET_KEY;
 
 @RestController
-@CrossOrigin(origins = {"https://alita-manager-app.herokuapp.com",
-        "https://fast-sierra-37663.herokuapp.com"})
+@CrossOrigin(origins = {"https://alita-manager-app.herokuapp.com"})
 @RequestMapping(value = {"/api/schedule/appointments"})
 public class AppointmentController {
     private AppointmentRepository appointmentRepository;
@@ -59,7 +58,7 @@ public class AppointmentController {
 //    }
 
     @DeleteMapping(value = {"/delete/id/{id}","/delete/id/{id}/"})
-    @PreAuthorize("hasIpAddress('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteAppointment(@PathVariable("id") String id){
         this.appointmentRepository.deleteById(id);
     }
