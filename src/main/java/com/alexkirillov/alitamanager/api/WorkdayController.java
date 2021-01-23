@@ -3,7 +3,6 @@ package com.alexkirillov.alitamanager.api;
 import com.alexkirillov.alitamanager.dao.workdayrepo.WorkdayRepository;
 import com.alexkirillov.alitamanager.models.QWorkday;
 import com.alexkirillov.alitamanager.models.Workday;
-import com.alexkirillov.alitamanager.models.time.Interval;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -20,11 +19,10 @@ import java.util.List;
 import static com.alexkirillov.alitamanager.security.pathwaykeys.PathKeys.SECRET_KEY;
 
 @RestController
-@CrossOrigin(origins = {"https://alita-manager-app.herokuapp.com",
-        "https://fast-sierra-37663.herokuapp.com"})
+@CrossOrigin(origins = {"https://alita-manager-app.herokuapp.com"})
 @RequestMapping("/api/schedule/workdays")
 public class WorkdayController {
-    private final WorkdayRepository workdayRepository;
+    private WorkdayRepository workdayRepository;
 
     @Autowired
     public WorkdayController(WorkdayRepository workdayRepository) {
@@ -108,33 +106,6 @@ public class WorkdayController {
 
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
-    }
-
-    @PostMapping(value = "/secret/{passKey}/time/adjust/dayId/{dayId}")
-    public ResponseEntity<String> adjustWorkTime(@PathVariable String passKey,
-                               @PathVariable String dayId,
-                               @RequestBody Interval interval){
-        if(passKey.equals(SECRET_KEY.getLoad())){
-            try {
-                Workday workday = this.getByDayId(dayId).get(0);
-
-                //throws
-                workday.decreaseTime(interval.getDuration());
-
-                //insert time range;
-               boolean interval_flag =  workday.addInterval(interval);
-               if(interval_flag){
-                //update the workday in db
-                    this.workdayRepository.save(workday);
-                    return new ResponseEntity<>(HttpStatus.OK);
-               }
-
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            return new ResponseEntity<>(HttpStatus.INSUFFICIENT_STORAGE);
-        }
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
 

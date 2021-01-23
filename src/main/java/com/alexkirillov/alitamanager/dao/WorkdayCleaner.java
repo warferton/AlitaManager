@@ -1,7 +1,9 @@
 package com.alexkirillov.alitamanager.dao;
 
 import com.alexkirillov.alitamanager.api.AppointmentController;
+import com.alexkirillov.alitamanager.api.EmployeeController;
 import com.alexkirillov.alitamanager.api.WorkdayController;
+import com.alexkirillov.alitamanager.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -15,15 +17,18 @@ import static com.alexkirillov.alitamanager.security.pathwaykeys.PathKeys.SECRET
 public class WorkdayCleaner {
 
     private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-    @Autowired
+
     private static AppointmentController appointmentController;
-    @Autowired
     private static WorkdayController workdayController;
+    private static EmployeeController employeeController;
 
     @Autowired
-    public WorkdayCleaner(AppointmentController appointmentController, WorkdayController workdayController) {
+    public WorkdayCleaner(AppointmentController appointmentController,
+                          WorkdayController workdayController,
+                          EmployeeController employeeController) {
         WorkdayCleaner.appointmentController = appointmentController;
         WorkdayCleaner.workdayController = workdayController;
+        WorkdayCleaner.employeeController = employeeController;
     }
 
 
@@ -42,6 +47,8 @@ public class WorkdayCleaner {
                  appointmentController.decrementDayIds(SECRET_KEY.getLoad());
                  //delete wd
                  workdayController.deleteWorkday("0");///TEST OUT LATER
+                 //update employees' schedules
+                 employeeController.shiftSchedules();
 
 
 

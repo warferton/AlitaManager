@@ -21,6 +21,7 @@ import static com.alexkirillov.alitamanager.security.pathwaykeys.PathKeys.SECRET
 @CrossOrigin(origins = {"https://alita-manager-app.herokuapp.com"})
 @RequestMapping(value = {"/api/schedule/appointments"})
 public class AppointmentController {
+
     private AppointmentRepository appointmentRepository;
 
     private AppointmentControllerHelper helper;

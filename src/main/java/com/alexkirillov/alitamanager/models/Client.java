@@ -64,8 +64,4 @@ public class  Client {
         return id;
     };
 
-    public DBObject toDBObject(){
-        return new BasicDBObject("userName", telegram_name).append("firstName", first_name)
-                .append("lastName", last_name).append("telephone", telephone_number);
-    }
 }

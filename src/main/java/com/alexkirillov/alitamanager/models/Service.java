@@ -76,8 +76,4 @@ public class Service {
                 '}';
     }
 
-    public DBObject toDBObject(){
-        return new BasicDBObject("service_name", service_name).append("estimated_time", estimated_time)
-                .append("price", price);
-    }
 }

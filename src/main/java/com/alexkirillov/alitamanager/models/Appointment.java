@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Set;
 
 
@@ -40,7 +41,7 @@ public class Appointment {
     Service service;
 
     @NotBlank
-    private Set<Employee> employees;
+    private List<Employee> employees;
 
     private boolean confirmed;
 
@@ -53,7 +54,7 @@ public class Appointment {
     public Appointment(@NotEmpty @JsonProperty("service") Service service
             , @NotEmpty @JsonProperty("date_time") String date_time
             , @NotNull @JsonProperty("client") Client client
-            , @NotEmpty @NotNull @JsonProperty("employees")Set<Employee> employees
+            , @NotEmpty @NotNull @JsonProperty("employees")List<Employee> employees
             , @NotEmpty @JsonProperty("confirmed") boolean confirmed) {
         this.date_time = date_time;
         this.day_id = parseDateToDayId(this.date_time);
@@ -81,11 +82,11 @@ public class Appointment {
         this.service = service;
     }
 
-    public Set<Employee> getEmployees() {
+    public List<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(Set<Employee> employees) {
+    public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
 
@@ -119,9 +120,4 @@ public class Appointment {
         this.day_id = day_id + "";
     }
 
-    public DBObject toDBObject(){
-        return new BasicDBObject("service", service)
-                .append("dayId", day_id)
-                .append("employees", employees);
-    }
 }
