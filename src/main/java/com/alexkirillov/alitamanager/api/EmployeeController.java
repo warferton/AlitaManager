@@ -3,7 +3,6 @@ package com.alexkirillov.alitamanager.api;
 import com.alexkirillov.alitamanager.dao.employeerepo.EmployeeRepository;
 import com.alexkirillov.alitamanager.models.Employee;
 import com.alexkirillov.alitamanager.models.QEmployee;
-import com.alexkirillov.alitamanager.models.Workday;
 import com.alexkirillov.alitamanager.models.time.Interval;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;

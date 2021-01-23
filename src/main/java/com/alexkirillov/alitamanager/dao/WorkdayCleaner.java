@@ -3,7 +3,6 @@ package com.alexkirillov.alitamanager.dao;
 import com.alexkirillov.alitamanager.api.AppointmentController;
 import com.alexkirillov.alitamanager.api.EmployeeController;
 import com.alexkirillov.alitamanager.api.WorkdayController;
-import com.alexkirillov.alitamanager.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
