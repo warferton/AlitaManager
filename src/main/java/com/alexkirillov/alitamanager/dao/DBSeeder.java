@@ -60,12 +60,7 @@
 //        Client client_2 = new Client("Nolan", "Steinberg",  "93742341342");
 //
 //
-//        //empty db
-//        this.clientRepository.deleteAll();
-//        this.employeeRepository.deleteAll();
-//        this.workdayRepository.deleteAll();
-//        this.appointmentRepository.deleteAll();
-//        this.serviceRepository.deleteAll();
+//
 //
 //
 //        //populate the db
