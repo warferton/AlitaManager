@@ -3,6 +3,8 @@ package com.alexkirillov.alitamanager.api;
 import com.alexkirillov.alitamanager.api.helpers.AppointmentControllerHelper;
 import com.alexkirillov.alitamanager.dao.appointmentrepo.AppointmentRepository;
 import com.alexkirillov.alitamanager.models.Appointment;
+import com.alexkirillov.alitamanager.models.QAppointment;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -88,13 +90,13 @@ public class AppointmentController {
 
     //TODO Search (NOT USED YET)
 //
-//    @GetMapping(value = {"/find/name/{name}","/find/name/{name}/"})
-//    public List<Appointment> getByName(@PathVariable("name") String service_name){
-//        QAppointment appointment = new QAppointment("appointment");
-//        BooleanExpression filter_name = appointment.service.service_name.contains(service_name);
-//
-//        return (List<Appointment>) this.appointmentRepository.findAll(filter_name);
-//    }
+    @GetMapping(value = {"/find/name/{name}","/find/name/{name}/"})
+    public List<Appointment> getByName(@PathVariable("name") String service_name){
+        QAppointment appointment = new QAppointment("appointment");
+        BooleanExpression filter_name = appointment.service.service_name.contains(service_name);
+
+        return (List<Appointment>) this.appointmentRepository.findAll(filter_name);
+    }
 //
 //    @GetMapping(value = {"/find/price/{price}","/find/price/{price}/"})
 //    public List<Appointment> getByPrice(@PathVariable("price") String price){
@@ -109,7 +111,7 @@ public class AppointmentController {
 //    @GetMapping(value = {"/find/employee/{employee}","/find/employee/{employee}/"})
 //    public List<Appointment> getByEmployee(@PathVariable("employee") String employee){
 //        QAppointment appointment = new QAppointment("appointment");
-//        BooleanExpression filter_employee = appointment.employees.contains(employee);
+//        BooleanExpression filter_employee = appointment.employees.contains(new Employee(, ""));
 //
 //        return (List<Appointment>) this.appointmentRepository.findAll(filter_employee);
 //    }
