@@ -96,18 +96,22 @@ public class Employee {
         List<Interval> intervals_on_day = this.intervals.get(day_index);
 
         if (intervals_on_day == null) {
-            this.intervals.put(day_index, Arrays.asList(new Interval[]{interval}));
-            return true;
+            if (day_index <= 30 && day_index > 0){
+                this.intervals.put(day_index, Arrays.asList(new Interval[]{interval}));
+                return true;
+            }
+            return false;
         }
-
 
         boolean overlap = intervals_on_day.stream().anyMatch(i -> i.isOverlapping(interval));
 
         if (!overlap) {
             List<Interval> updated_list = this.intervals.get(day_index);
             updated_list.add(interval);
-            this.intervals.put(day_index, updated_list);
-            return true;
+            if (day_index <= 30 && day_index > 0){
+                this.intervals.put(day_index, updated_list);
+                return true;
+            }
         }
         return false;
     }
@@ -124,16 +128,16 @@ public class Employee {
 
     /**
      * Shifts every value in the Intervals map a key higher, and
-     * deletes
      *
      * */
     public void shiftDays(){
         int size = this.intervals.size();
 
-        //shift values back 1 key
-        for(int i = 0; i < (size - 1); i++){
+        //shift map values 1 key up
+        for(int i = 0; i < size; i++){
             try {
                 this.intervals.put(i, this.intervals.get(i + 1));
+                this.intervals.remove(i + 1);
             }
             catch (NullPointerException e){
                 e.printStackTrace();

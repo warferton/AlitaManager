@@ -3,8 +3,6 @@ package com.alexkirillov.alitamanager.api;
 import com.alexkirillov.alitamanager.api.helpers.AppointmentControllerHelper;
 import com.alexkirillov.alitamanager.dao.appointmentrepo.AppointmentRepository;
 import com.alexkirillov.alitamanager.models.Appointment;
-import com.alexkirillov.alitamanager.models.QAppointment;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -13,6 +11,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.alexkirillov.alitamanager.security.pathwaykeys.PathKeys.SECRET_KEY;
@@ -67,14 +66,7 @@ public class AppointmentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = {"/delete/all/day/id/{day_id}", "/delete/all/day/id/{day_id}/"})
-    public ResponseEntity<String> deleteAllAppointmentsOnWorkday(@PathVariable("day_id") String day_id){
-        QAppointment appointment = new QAppointment("appointment");
-        BooleanExpression filter = appointment.day_id.eq(day_id);
-        List<Appointment> appointments_to_delete = (List<Appointment>) this.appointmentRepository.findAll(filter);
-        this.appointmentRepository.deleteAll(appointments_to_delete);
-        return new ResponseEntity(HttpStatus.OK);
-    }
+
 
     //SERVER-SIDE MANIPULATIONS
     @DeleteMapping(value = "secret/{passKey}/dec/all")
@@ -85,6 +77,9 @@ public class AppointmentController {
             this.appointmentRepository.deleteAll();
             appointments.stream()
                     .forEach(a -> a.setDay_id(Integer.parseInt(a.getDayId()) - 1));
+            appointments.removeIf(appointment ->
+                    LocalDate.now().isAfter(LocalDate.parse(appointment.getDateTime()
+                            .substring(0,appointment.getDateTime().indexOf('T')))));
             this.appointmentRepository.saveAll(appointments);
             return;
         }

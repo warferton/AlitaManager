@@ -33,7 +33,9 @@ public class AppointmentControllerHelper {
     }
 
 
-    public ResponseEntity<String> insertOneAppointment(Appointment new_appointment, AppointmentRepository appointmentRepository) {
+    public ResponseEntity<String> insertOneAppointment(Appointment new_appointment,
+                                                       AppointmentRepository appointmentRepository) {
+
         RestTemplate restTemplate = buildRestTemplate();
 
         Map<String, String> response_headers = new HashMap<>();

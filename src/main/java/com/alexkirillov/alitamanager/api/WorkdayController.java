@@ -5,13 +5,10 @@ import com.alexkirillov.alitamanager.models.QWorkday;
 import com.alexkirillov.alitamanager.models.Workday;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -55,22 +52,20 @@ public class WorkdayController {
     }
 
     @DeleteMapping(value = {"/delete/dayId/{day_id}", "/delete/dayId/{day_id}/"})
-    public void deleteWorkday(@PathVariable("day_id") String day_id){
-        RestTemplateBuilder builder = new RestTemplateBuilder();
-        RestTemplate restTemplate = builder.build();
-        String delete_url = "http://localhost:8080/api/schedule/appointments/delete/all/day/id/{day_id}";
-        try {
+    public ResponseEntity<String> deleteWorkday(@PathVariable("day_id") String day_id) {
+        try{
 
-            restTemplate.delete(delete_url, day_id);
+            String id = this.getByDayId(day_id).get(0).getId();
+            this.workdayRepository.deleteById(id);
+            System.out.println("WD_ID: " + id + "  --DELETED");
+            return new ResponseEntity(HttpStatus.OK);
 
-        }catch (HttpServerErrorException httpException) {
-            System.err.println("HTTPServerErrorException. CODE: 500.  No appointments, collection is empty");
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            return new ResponseEntity<>(HttpStatus.valueOf(400));
         }
-
-        String id = this.getByDayId(day_id).get(0).getDayId();
-        this.workdayRepository.deleteById(id);
-        System.out.println("WD_ID: " + id + "  --DELETED");
-    }
 
     //Search
     @GetMapping(value = {"/find/byDate/{date}","/find/byDate/{date}/"})
@@ -90,17 +85,37 @@ public class WorkdayController {
 
     //SERVER-SIDE MANIPULATIONS
 
-    //DECR all DayIds and delete the first one
+    //DECR all DayIds and delete all the workdays that are before today
     @DeleteMapping(value = {"/secret/{passKey}/dec/all"})
     public ResponseEntity<String> decrementDayIds(@PathVariable String passKey){
         if(passKey.equals(SECRET_KEY.getLoad())) {
             List<Workday> workdays = this.workdayRepository.findAll();
+
+            //delete all days and appointments before today
+            workdays.forEach(w -> {
+                    if(w.getDate().isBefore(LocalDate.now())){
+                        this.deleteWorkday(w.getDayId());
+                    }
+            });
+
+            //erase all deleted workdays
+            workdays = this.workdayRepository.findAll();
+            //clean the DB
             this.workdayRepository.deleteAll();
-            if(Integer.parseInt(workdays.get(0).getDayId()) <= 0)
-                workdays.remove(0);
-            workdays
-                    .forEach(w -> w.setDay_id(Integer.parseInt(w.getDayId()) - 1));
+
+            if(!workdays.isEmpty()) {
+                //extra check so that the first day in the list don't have the dayId = 0
+                if (Integer.parseInt(workdays.get(0).getDayId()) <= 0)
+                    workdays.remove(0);
+
+                //DECR the indexes
+                if(Integer.parseInt(workdays.get(0).getDayId()) > 1)
+                    workdays
+                            .forEach(w -> w.setDay_id(Integer.parseInt(w.getDayId()) - 1));
+            }
+            //put workdays back to the DB
             this.workdayRepository.saveAll(workdays);
+
             return new ResponseEntity<>(HttpStatus.OK);
         }
 

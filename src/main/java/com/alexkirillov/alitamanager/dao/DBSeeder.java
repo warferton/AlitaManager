@@ -11,6 +11,7 @@
 //import org.springframework.stereotype.Component;
 //
 //import java.time.Duration;
+//import java.time.LocalDate;
 //import java.time.temporal.ChronoUnit;
 //import java.util.Arrays;
 //import java.util.List;
@@ -60,17 +61,21 @@
 //        Client client_2 = new Client("Nolan", "Steinberg",  "93742341342");
 //
 //
+//        Appointment ap_1 = new Appointment(service_1, LocalDate.now().plusDays(1).toString(),
+//                client_1, Arrays.asList(employee_1), false);
+//        Appointment ap_2 = new Appointment(service_1, LocalDate.now().plusDays(2).toString(),
+//                client_1, Arrays.asList(employee_1), false);
+//        Appointment ap_3 = new Appointment(service_1, LocalDate.now().plusDays(3).toString(),
+//                client_2, Arrays.asList(employee_2), false);
 //
+//         this.appointmentRepository.deleteAll();
 //
 //
 //        //populate the db
-//        List<Client> clients = Arrays.asList(client_1,client_2);
-//        List<Employee> employees = Arrays.asList(employee_1,employee_2);
-//        List<Service> services = Arrays.asList(service_1, service_2, service_3, service_4);
 //
-//        this.serviceRepository.saveAll(services);
-//        this.employeeRepository.saveAll(employees);
-//        this.clientRepository.saveAll(clients);
+//        List<Appointment> appointments = Arrays.asList(ap_1, ap_2,ap_3);
+//
+//        this.appointmentRepository.saveAll(appointments);
 //    }
 //
 //}
