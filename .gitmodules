@@ -1,0 +1,3 @@
+[submodule "React_Frontend"]
+	path = React_Frontend
+	url = https://github.com/warferton/AlitaManagerClient
