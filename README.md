@@ -4,10 +4,10 @@
 Appointmetn Management tool for a small business.  Allows workers, that are assigned a role of _EMPLOYEE_, and system administrator(or a superviser), who is assigned a role of _ADMIN_, to view and manipulate scheduled appointments.  _ADMIN_ is also able manipulate the data considering services that business provides, and employee data.  All information is stored on a remote database, provided by __Mongo Atlas__
 
 ### Technology used
- - Java / Spring Boot (Spring Web, Spring Security through JWT Tokens)
- - Mongo Atlas
- - ReactJs
- - Hosted on <a href="https://alita-manager-app.herokuapp.com/home">__Heroku__</a>
+ - :coffee: Java / Spring Boot (Spring Web, Spring Security through JWT Tokens)
+ - :leaves: Mongo Atlas
+ - :biohazard: ReactJs
+ - <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmaxcdn.icons8.com%2FColor%2FPNG%2F512%2FLogos%2Fheroku-512.png&f=1&nofb=1" width="20px" height="15px"/>Hosted on <a href="https://alita-manager-app.herokuapp.com/home">__Heroku__</a>
  
  ### Views
  
