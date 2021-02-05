@@ -6,7 +6,7 @@ Appointmetn Management tool for a small business.  Allows workers, that are assi
 ### Technology used
  - :coffee: Java / Spring Boot (Spring Web, Spring Security through JWT Tokens)
  - :leaves: Mongo Atlas
- - :biohazard: ReactJs
+ - <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn2.iconfinder.com%2Fdata%2Ficons%2Fdesigner-skills%2F128%2Freact-512.png&f=1&nofb=1"  width="20px" height="20px"/>ReactJs
  - <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmaxcdn.icons8.com%2FColor%2FPNG%2F512%2FLogos%2Fheroku-512.png&f=1&nofb=1" width="20px" height="15px"/>Hosted on <a href="https://alita-manager-app.herokuapp.com/home">__Heroku__</a>
  
  ### Views
